@@ -27,12 +27,13 @@
       "esri/config", 
       "esri/Map", 
       "esri/views/MapView", 
-      "esri/widgets/BasemapGallery",
-      "esri/Basemap", 
-      "esri/widgets/Locate",
-      "esri/widgets/Search",
-      //"esri/widgets/LocatorSearchSource"
-    ], function(esriConfig, Map, MapView, BasemapGallery, Basemap, Locate, Search) {
+
+      //addding in the modules for the graphic and graphic layer
+
+     "esri/Graphic",
+     "esri/layers/GraphicsLayer"
+
+    ], function(esriConfig, Map, MapView, Graphic, GraphicsLayer) {
       
       // Set the API key
       //esriConfig.apiKey = "AAPTxy8BH1VEsoebNVZXo8HurEeWBrCUPqSi8hnMSbsokZImKDKTL2eumxMlESK1TMtKyNo7lfF29XWJr1HBgU5k8Yz-AjfuTxa2vPyyl0RCVT4xzL5PplmSPzOGedjbriUKafzdigctaodVOCB8qHpAEuLk4GAHY6vztIgXWOUq1FBuvbQImCq5iHcuQO8Ks9462SuFmCHUNWVKsZwvP1x3I8MHpskalumUoA2N4kWzqdcdEHRAEQeiLNeeOjQ4f_NtAT1_lgbmcTBB";
@@ -44,30 +45,36 @@
 
       // Create the map view
       const view = new MapView({
-        container: "viewDiv",
         map: map,
         center: [-99.07, 40.701500], // Longitude, latitude Kearney, NE
-        zoom: 10 // Zoom level
+        zoom: 13 // Zoom level
+        container: "viewDiv"
       });
 
-      const basemapGallery = new BasemapGallery({
-        view: view
+      // Create a new graphics layer
+      const graphicsLayer = new GraphicsLayer();
+      map.add(graphicsLayer);
+      const point = {
+        type: "point",
+        longitude: -99.07,  // Kearney State College (UNK "Lopers")
+        latitude: 40.701500
+      };
+
+      const simpleMarkerSymbol = {
+        type: "simple-marker",
+        color: [0, 0, 255],  // Blue
+        outline: {
+          color: [255, 255, 255], // White
+          width: 1
+        }
+      };
+
+      const pointGraphic = new Graphic({
+        geometry: point,
+        symbol: simpleMarkerSymbol
       });
 
-      view.ui.add(basemapGallery, {
-        position: "bottom-right"
-      });
-
-      // Add the locateWidget
-      const locateWidget = new Locate({
-        view: view
-      });
-      view.ui.add(locateWidget, "top-left");
-
-      //add the searchWidget
-      view.ui.add(new Search({
-        view: view
-      }), "top-right");
+      graphicsLayer.add(pointGraphic);
     });
   </script> 
 </head>
