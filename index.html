@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Hello World!</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Calls for the ArcGIS API's CSS file and JS Library -->
+  <link rel="stylesheet" href="https://js.arcgis.com/4.25/esri/themes/light/main.css">
+  <script src="https://js.arcgis.com/4.25/"></script>
+
+  <!-- CSS to make a full screen map -->
+  <style>
+    html, 
+    body, 
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%; 
+      width: 100%;
+    }
+  </style>
+
+  <!-- Adding the modules, API key, and map constant needed for a full screen map app -->
+  <script>
+    require([
+      "esri/config", 
+      "esri/Map", 
+      "esri/views/MapView", 
+      "esri/widgets/BasemapGallery",
+      "esri/Basemap", 
+      "esri/widgets/Locate",
+      "esri/widgets/Search",
+      //"esri/widgets/LocatorSearchSource"
+    ], function(esriConfig, Map, MapView, BasemapGallery, Basemap, Locate, Search) {
+      
+      // Set the API key
+      //esriConfig.apiKey = "AAPTxy8BH1VEsoebNVZXo8HurEeWBrCUPqSi8hnMSbsokZImKDKTL2eumxMlESK1TMtKyNo7lfF29XWJr1HBgU5k8Yz-AjfuTxa2vPyyl0RCVT4xzL5PplmSPzOGedjbriUKafzdigctaodVOCB8qHpAEuLk4GAHY6vztIgXWOUq1FBuvbQImCq5iHcuQO8Ks9462SuFmCHUNWVKsZwvP1x3I8MHpskalumUoA2N4kWzqdcdEHRAEQeiLNeeOjQ4f_NtAT1_lgbmcTBB";
+      esriConfig.apiKey = "AAPKfc7af196c6e64aac988bbf7529dccd648UR6aqr1HCuaJ5GN7OXourF3WZ9GF_b8R9-mMcrEZMHlZzpuLXHwt5iwInOA9k4J";
+      // Create the map object
+      const map = new Map({
+        basemap: "streets" // arcgis-imagery-labels just shows labels, no imagery
+      }); 
+
+      // Create the map view
+      const view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [-99.07, 40.701500], // Longitude, latitude Kearney, NE
+        zoom: 10 // Zoom level
+      });
+
+      const basemapGallery = new BasemapGallery({
+        view: view
+      });
+
+      view.ui.add(basemapGallery, {
+        position: "bottom-right"
+      });
+
+      // Add the locateWidget
+      const locateWidget = new Locate({
+        view: view
+      });
+      view.ui.add(locateWidget, "top-left");
+
+      //add the searchWidget
+      view.ui.add(new Search({
+        view: view
+      }), "top-right");
+    });
+  </script> 
+</head>
+<body>
+  <!-- The div to display the map -->
+  <div id="viewDiv"></div>
+  <div id="galleryDiv"></div>
+</body>
+</html>
