@@ -47,8 +47,8 @@
       const view = new MapView({
         container: "viewDiv",
         map: map,
-        center: [-99.07, 40.701500], // Longitude, latitude Kearney, NE
-        zoom: 13, // Zoom level
+        center: [-99.0959, 40.701500], // Longitude, latitude Kearney, NE
+        zoom: 17, // Zoom level
       });
 
       // Create a new graphics layer
@@ -56,8 +56,8 @@
       map.add(graphicsLayer);
       const point = {
         type: "point",
-        longitude: -99.07,  // Kearney State College (UNK "Lopers")
-        latitude: 40.701500
+        longitude: -99.0959,  // Kearney State College (UNK "Lopers"). Bruner Hall my Geography Department.
+        latitude: 40.70000,
       };
 
       const simpleMarkerSymbol = {
