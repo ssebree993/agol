@@ -29,11 +29,13 @@
       "esri/views/MapView", 
 
       //adding in the modules for the graphic and graphic layer
-
      "esri/Graphic",
-     "esri/layers/GraphicsLayer"
+     "esri/layers/GraphicsLayer",
 
-    ], function(esriConfig, Map, MapView, Graphic, GraphicsLayer) {
+       //adding in the modules for the FeatureLayer
+      "esri/layers/FeatureLayer"
+
+    ], function(esriConfig, Map, MapView, Graphic, GraphicsLayer, FeatureLayer) {
       
       // Set the API key
       //esriConfig.apiKey = "AAPTxy8BH1VEsoebNVZXo8HurEeWBrCUPqSi8hnMSbsokZImKDKTL2eumxMlESK1TMtKyNo7lfF29XWJr1HBgU5k8Yz-AjfuTxa2vPyyl0RCVT4xzL5PplmSPzOGedjbriUKafzdigctaodVOCB8qHpAEuLk4GAHY6vztIgXWOUq1FBuvbQImCq5iHcuQO8Ks9462SuFmCHUNWVKsZwvP1x3I8MHpskalumUoA2N4kWzqdcdEHRAEQeiLNeeOjQ4f_NtAT1_lgbmcTBB";
@@ -53,12 +55,14 @@
 
       // Create a new graphics layer
       const graphicsLayer = new GraphicsLayer();
+
       map.add(graphicsLayer);
       const point = {
         type: "point",
         longitude: -99.0957,  // Kearney State College (UNK "Lopers"). Bruner Hall my Geography Department.
         latitude: 40.7000023,
       };
+
       // defining the marker style
       const simpleMarkerSymbol = {
         type: "simple-marker",
@@ -87,8 +91,14 @@
         attributes: attributes,
         popupTemplate: popupTemplate
       });
-
+        // adding the point to the graphics layer
       graphicsLayer.add(pointGraphic);
+      
+      //adding the constructor for the feature layer
+      const cdchealthLayer = new FeatureLayer({
+        url:"https://services3.arcgis.com/ZvidGQkLaDJxRSJ2/arcgis/rest/services/PLACES_LocalData_for_BetterHealth/FeatureServer"
+      });
+      map.add(cdchealthLayer);
     });
   </script> 
 </head>
