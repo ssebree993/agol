@@ -81,11 +81,22 @@
       //adding the point to the graphics layer
       graphicsLayer.add(pointGraphic);
 
-      //adding the constructor for the feature layer
+      // Define a pop-up for usaeduLayer
+      const popupEduusa = {
+      "title": "EDUs",
+      "content": "<b>Name:</b> {INSTNM}<br><b>Location:</b> {CITY}, {STABBR} <br> Link: <a href='{WEBADDR}'>Website</a>" //add Arcade reference for logic
+      };
+
+      //adding the Const for the feature layer
       const usaeduLayer = new FeatureLayer({
-        url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Colleges_and_Universities_View/FeatureServer"
+      url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Colleges_and_Universities_View/FeatureServer",
+
+      //adding the popup here
+      outFields: ["NAME","LOCATION"],
+      popupTemplate: popupEduusa
       });
-      //adding the feature layer to the map //squares not showing
+
+      //adding the feature layer to the map
       map.add(usaeduLayer);
     });
   </script> 
