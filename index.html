@@ -38,10 +38,10 @@
       
       // Set the API key
       esriConfig.apiKey = "AAPKfc7af196c6e64aac988bbf7529dccd648UR6aqr1HCuaJ5GN7OXourF3WZ9GF_b8R9-mMcrEZMHlZzpuLXHwt5iwInOA9k4J";
-      //esriConfig.apiKey = "AAPTxy8BH1VEsoebNVZXo8HurEeWBrCUPqSi8hnMSbsokZImKDKTL2eumxMlESK1TMtKyBiJgFqyO66gp2vjRytP5SCYObwtn8YsJ02oyMOPtgI96WlQbxzO5rJS_nIbxh-d9Ym9uHp2_4rljFtZFSM3yxNov2eKbV3aUzZVy56ixwSYn05u_IArGuV1QpQOc8O2VeMUfT6Jotf4DlufdgcxMssKDsByCVKNm6F-bZtaRbR627UqEYygIb9vQST0lueAAT1_0FIWPe5N";
+      //esriConfig.apiKey = "AAPT85fOqywZsicJupSmVSCGrslDPpHLKdEC579i7QVZKKNqTaFEeIytAi1JTwVtY-aleNcZEVhA7Z-zMznZkvxmIW4cicsFSs5dK-LqT5GRNyinVkEWRb345PmXXiTttCfoIhOzFDEKiAlnI5i9lGeSYfylzPB9DZqLOy749pB-_OpNF3slOcfhIeUFFFMERUvMpXDF2lvLhBUz3GNJJ4saUOWCbEbhrWG8wKa3bQV33F2vD2P_EWfvXc_3aeFIdyVGAT2_0FIWPe5N";
 
       const map = new Map({
-        basemap: "streets"
+        basemap: "arcgis-topographic" // Basemap layer service
       });
  
       // Create the map view
@@ -91,12 +91,12 @@
       // Define a pop-up for usa_airports
       const popupAirports = {
         "title": "Airport: {FAC_NAME}",
-        "content": "<b>Name:</b> {FAC_NAME}<br><b>Location:</b> {LOC_ID}"
+        "content": "<b>Name:</b> {FAC_NAME}<br><b>Callsign:</b> {LOC_ID}"
       };
 
       // adding constructor for the feature layer  **************why isn't this working?**************
       const usaeduLayer = new FeatureLayer({
-        url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Colleges_and_Universities_View/FeatureServer",
+        url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Structures_Education_v1/FeatureServer"
     });
 
       // adding second layer
