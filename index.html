@@ -117,14 +117,14 @@
         type: "simple",
         symbol: {
           type: "picture-marker",
-          url: "https://ssebree993.github.io/agol/local_airport_24dp_5F6368.png",
+          url: "https://ssebree993.github.io/agol/AP_PNG2.png",
           width: "18px",
           height: "18px"
         }
-      }
+      };
 
       const airportLayer = new FeatureLayer({
-        url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/US_Airports_576/FeatureServer/0",
+        url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/US_Airports_576/FeatureServer",
         renderer: airportRenderer,  //calling the icon
         definitionExpression: "Fac_type = 'AIRPORT'" //filtering the airports
       });
