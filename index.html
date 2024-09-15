@@ -84,7 +84,7 @@
       // Define a pop-up for usaeduLayer  // FIX FOR AIRPORTS later --
       const popupEduusa = {
       "title": "US Airports",
-      //"content": "<b>Name:</b> {INSTNM}<br><b>Location:</b> {CITY}, {STABBR} <br> Link: <a href='{WEBADDR}'>Website</a>" //add Arcade reference for logic
+      "content": "<b>Name:</b> {INSTNM}<br><b>Location:</b> {CITY}, {STABBR} <br> Link: <a href='{WEBADDR}'>Website</a>" //add Arcade reference for logic
       };
 
       //adding second layer
@@ -109,7 +109,7 @@
 
       const airportLayer = new FeatureLayer({
         url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/US_Airports_576/FeatureServer/0",
-        renderer: airportRenderer
+        renderer: airportRenderer  //calling the icon
       });
 
       //adding the feature layer to the map
