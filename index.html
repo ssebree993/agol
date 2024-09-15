@@ -81,23 +81,39 @@
       //adding the point to the graphics layer
       graphicsLayer.add(pointGraphic);
 
-      // Define a pop-up for usaeduLayer
+      // Define a pop-up for usaeduLayer  // FIX FOR AIRPORTS later --
       const popupEduusa = {
-      "title": "EDUs",
-      "content": "<b>Name:</b> {INSTNM}<br><b>Location:</b> {CITY}, {STABBR} <br> Link: <a href='{WEBADDR}'>Website</a>" //add Arcade reference for logic
+      "title": "US Airports",
+      //"content": "<b>Name:</b> {INSTNM}<br><b>Location:</b> {CITY}, {STABBR} <br> Link: <a href='{WEBADDR}'>Website</a>" //add Arcade reference for logic
       };
 
-      //adding the Const for the feature layer
-      const usaeduLayer = new FeatureLayer({
-      url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Colleges_and_Universities_View/FeatureServer",
+      //adding second layer
+      const usa_airports = new FeatureLayer({
+        url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/US_Airports_576/FeatureServer/0",
 
       //adding the popup here
       outFields: ["NAME","LOCATION"],
       popupTemplate: popupEduusa
       });
 
+      //setting up the icon
+      const airportRenderer = {
+        type: "simple",
+        symbol: {
+          type: "picture-marker",
+          url: "https://ssebree993.github.io/agol/local_airport_24dp_5F6368.png",
+          width: "18px",
+          height: "18px"
+        }
+      }
+
+      const airportLayer = new FeatureLayer({
+        url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/US_Airports_576/FeatureServer/0",
+        renderer: airportRenderer
+      });
+
       //adding the feature layer to the map
-      map.add(usaeduLayer);
+      map.add(usa_airports);
     });
   </script> 
 </head>
