@@ -37,11 +37,11 @@
     ], function(esriConfig, Map, MapView, Graphic, GraphicsLayer, FeatureLayer) {
       
       // Set the API key
-      //esriConfig.apiKey = "AAPKfc7af196c6e64aac988bbf7529dccd648UR6aqr1HCuaJ5GN7OXourF3WZ9GF_b8R9-mMcrEZMHlZzpuLXHwt5iwInOA9k4J";
-      esriConfig.apiKey = "AAPTxy8BH1VEsoebNVZXo8HurEeWBrCUPqSi8hnMSbsokZImKDKTL2eumxMlESK1TMtKyBiJgFqyO66gp2vjRytP5SCYObwtn8YsJ02oyMOPtgI96WlQbxzO5rJS_nIbxh-d9Ym9uHp2_4rljFtZFSM3yxNov2eKbV3aUzZVy56ixwSYn05u_IArGuV1QpQOc8O2VeMUfT6Jotf4DlufdgcxMssKDsByCVKNm6F-bZtaRbR627UqEYygIb9vQST0lueAAT1_0FIWPe5N"
+      esriConfig.apiKey = "AAPKfc7af196c6e64aac988bbf7529dccd648UR6aqr1HCuaJ5GN7OXourF3WZ9GF_b8R9-mMcrEZMHlZzpuLXHwt5iwInOA9k4J";
+      //esriConfig.apiKey = "AAPTxy8BH1VEsoebNVZXo8HurEeWBrCUPqSi8hnMSbsokZImKDKTL2eumxMlESK1TMtKyBiJgFqyO66gp2vjRytP5SCYObwtn8YsJ02oyMOPtgI96WlQbxzO5rJS_nIbxh-d9Ym9uHp2_4rljFtZFSM3yxNov2eKbV3aUzZVy56ixwSYn05u_IArGuV1QpQOc8O2VeMUfT6Jotf4DlufdgcxMssKDsByCVKNm6F-bZtaRbR627UqEYygIb9vQST0lueAAT1_0FIWPe5N";
 
       const map = new Map({
-        basemap: "topo-vector"
+        basemap: "streets"
       });
  
       // Create the map view
@@ -96,7 +96,7 @@
 
       // adding constructor for the feature layer  **************why isn't this working?**************
       const usaeduLayer = new FeatureLayer({
-        url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Colleges_and_Universities_View/FeatureServer/0",
+        url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Colleges_and_Universities_View/FeatureServer",
     });
 
       // adding second layer
