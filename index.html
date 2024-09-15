@@ -37,7 +37,8 @@
     ], function(esriConfig, Map, MapView, Graphic, GraphicsLayer, FeatureLayer) {
       
       // Set the API key
-      esriConfig.apiKey = "AAPKfc7af196c6e64aac988bbf7529dccd648UR6aqr1HCuaJ5GN7OXourF3WZ9GF_b8R9-mMcrEZMHlZzpuLXHwt5iwInOA9k4J";
+      //esriConfig.apiKey = "AAPKfc7af196c6e64aac988bbf7529dccd648UR6aqr1HCuaJ5GN7OXourF3WZ9GF_b8R9-mMcrEZMHlZzpuLXHwt5iwInOA9k4J";
+      esriConfig.apiKey = "AAPTxy8BH1VEsoebNVZXo8HurEeWBrCUPqSi8hnMSbsokZImKDKTL2eumxMlESK1TMtKyBiJgFqyO66gp2vjRytP5SCYObwtn8YsJ02oyMOPtgI96WlQbxzO5rJS_nIbxh-d9Ym9uHp2_4rljFtZFSM3yxNov2eKbV3aUzZVy56ixwSYn05u_IArGuV1QpQOc8O2VeMUfT6Jotf4DlufdgcxMssKDsByCVKNm6F-bZtaRbR627UqEYygIb9vQST0lueAAT1_0FIWPe5N"
 
       const map = new Map({
         basemap: "topo-vector"
@@ -81,26 +82,34 @@
       //adding the point to the graphics layer
       graphicsLayer.add(pointGraphic);
 
-      // Define a pop-up for usaeduLayer  // FIX FOR AIRPORTS later --
+      // Define a pop-up for usaeduLayer 
       const popupEduusa = {
         "title": "EDU: {INSTNM}",
         "content": "<b>Name:</b> {INSTNM}<br><b>Location:</b> {CITY}, {STABBR} <br> Link: <a href='{WEBADDR}'>Website</a>" //add Arcade reference for logic
       };
 
-      //keep schools layer
+      // Define a pop-up for usa_airports
+      const popupAirports = {
+        "title": "Airport: {FAC_NAME}",
+        "content": "<b>Name:</b> {FAC_NAME}<br><b>Location:</b> {LOC_ID}"
+      };
+
+      // adding constructor for the feature layer  **************why isn't this working?**************
       const usaeduLayer = new FeatureLayer({
-        url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/USA_Education_576/FeatureServer/0",
-        outFields: ["INSTNM","CITY","STABBR","WEBADDR"],
-        popupTemplate: popupEduusa
-      });
+        url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Colleges_and_Universities_View/FeatureServer/0",
+    });
 
-      //adding second layer
-      //const usa_airports = new FeatureLayer({
-        //url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/US_Airports_576/FeatureServer/0",
-
+      // adding second layer
+      const usa_airports = new FeatureLayer({
+        url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/US_Airports_576/FeatureServer/0",
+        //defining the fields for the popup
+        outFields: ["LOC_ID","FAC_NAME"],
+      
         //adding the popup here
-        outFields: ["NAME","LOCATION"],
-        popupTemplate: popupEduusa
+        popupTemplate: popupEduusa,
+      
+        //adding the airport popup here
+        popupTemplate: popupAirports
       });
 
       //setting up the icon
@@ -124,6 +133,7 @@
       map.add(usaeduLayer);
       map.add(usa_airports);
     });
+
   </script> 
 </head>
 <body>
