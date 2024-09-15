@@ -1,0 +1,39 @@
+require([
+    "esri/config",
+    "esri/Map",
+    "esri/views/MapView",
+    "esri/Graphic",
+    "esri/layers/GraphicsLayer",
+    "esri/layers/FeatureLayer"
+  ], function(esriConfig, Map, MapView, Graphic, GraphicsLayer, FeatureLayer) {
+
+    // ... other code ...
+
+    // Define a single popup template
+    const popupTemplate = {
+      "title": "{LayerName}: {NAME}",
+      "content": "<b>Additional Information:</b><br> {*}" // Use Arcade expressions for specific fields
+    };
+
+    // ... other code ...
+
+    const usaeduLayer = new FeatureLayer({
+      url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Structures_Education_v1/FeatureServer"
+    });
+
+    const usa_airports = new FeatureLayer({
+      url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/US_Airports_576/FeatureServer/0",
+      outFields: ["LOC_ID", "FAC_NAME"],
+      renderer: airportRenderer,
+      definitionExpression: "Fac_type = 'AIRPORT'"
+    });
+
+    map.add(usaeduLayer);
+    map.add(usa_airports);
+
+    // Set the popup template after adding the layers
+    usaeduLayer.setPopupTemplate(popupTemplate);
+    usa_airports.setPopupTemplate(popupTemplate);
+
+    // ... other code ...
+  });

@@ -94,7 +94,7 @@
         "content": "<b>Name:</b> {FAC_NAME}<br><b>Callsign:</b> {LOC_ID}"
       };
 
-      // adding constructor for the feature layer  **************why isn't this working?**************
+      // adding constructor for the feature layer ** symbols not showing as squares, changed to a second layer; only colleges showing
       const usaeduLayer = new FeatureLayer({
         url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Structures_Education_v1/FeatureServer"
     });
@@ -118,8 +118,8 @@
         symbol: {
           type: "picture-marker",
           url: "https://ssebree993.github.io/agol/AP_PNG2.png",
-          width: "18px",
-          height: "18px"
+          width: "20px",
+          height: "20px"
         }
       };
 
