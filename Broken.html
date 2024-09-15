@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Hello AGOL</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Calls for the ArcGIS API's CSS file and JS Library -->
+  <link rel="stylesheet" href="https://js.arcgis.com/4.25/esri/themes/light/main.css">
+  <script src="https://js.arcgis.com/4.25/"></script>
+
+  <!-- CSS to make a full screen map -->
+  <style>
+    html, 
+    body, 
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%; 
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <!-- The div to display the map -->
+  <div id="viewDiv"></div>
+  <div id="galleryDiv"></div>
+
+  <!--ARCADE SCRIPT-->
+  <script>
+    var arcadeExpressionInfos = [
+      {
+        //expression to display full web address correctly unless null 
+        name: 'Full Web Address',
+        title: 'Full Web Address',
+        expression: `
+        var w = $feature.WEBADDR
+        var l = Left(w, 3)
+        var m = Left(w, 5)
+        var concat = Concatenate('https://', w)
+        var concat2 = Concatenate('https://www.', w)
+        
+        If(l == 'www')
+        return concat
+        
+        if(m == 'https')
+        return w
+        
+        if(w == '')
+        return 'https://www.ed.gov/'
+        
+        Else
+        return concat2
+      }
+    ];
+
+    <!-- Adding the modules, API key, and map constant needed for a full screen map app -->
+    require([
+      "esri/config", 
+      "esri/Map", 
+      "esri/views/MapView", 
+
+      //adding in the modules for the graphic and graphic layer
+      "esri/Graphic",
+      "esri/layers/GraphicsLayer",
+
+      //adding in the modules for the FeatureLayer
+      "esri/layers/FeatureLayer"
+    ], function(esriConfig, Map, MapView, Graphic, GraphicsLayer, FeatureLayer) {
+      
+      // Set the API key
+      esriConfig.apiKey = "AAPKfc7af196c6e64aac988bbf7529dccd648UR6aqr1HCuaJ5GN7OXourF3WZ9GF_b8R9-mMcrEZMHlZzpuLXHwt5iwInOA9k4J";
+      //esriConfig.apiKey = "AAPTxy8BH1VEsoebNVZXo8HurEeWBrCUPqSi8hnMSbsokZImKDKTL2eumxMlESK1TMtKX3gJ2wBAkO_V6RhRqzikZAw-impcWUS08CNTRxMZThwtPL1muLTpF_2nvp7i0-aJRdLsfglIt3AbJBWRO5bXlGpxjG_t6By6L1-vWJLVgI2N_qXF1CQx7bZlfhiKzKjTtHhUEmvRBXubdPaIzuKZfh7bZmMlIVz-7-4cORBc-NN-HByXcRV7Z2MAQbQTgHxTAT1_lgbmcTBBQ";
+
+      const map = new Map({
+        basemap: "topo-vector"
+      });
+ 
+      // Create the map view
+      const view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [-99.0959, 40.70100], // Longitude, latitude Kearney, NE
+        zoom: 12, // Zoom level
+      });
+
+      // Create a new graphics layer
+      const graphicsLayer = new GraphicsLayer();
+
+      map.add(graphicsLayer);
+      const point = {
+        type: "point",
+        longitude: -99.0957,  // Kearney State College (UNK "Lopers"). Bruner Hall my Geography Department.
+        latitude: 40.7000023,
+      };
+
+      // defining the marker style
+      const simpleMarkerSymbol = {
+        type: "simple-marker",
+        color: [0, 0, 255],  // Blue
+        outline: {
+          color: [255, 255, 255], // White
+          width: 1
+        }
+      };
+
+      // defining popup properties
+      const popupTemplate = {
+        title: "UNK",
+        content: "Bruner Hall"
+      };
+      const attributes = {
+        name: "UNK",
+        location: "Kearney, NE"
+      };
+
+      const pointGraphic = new Graphic({
+        geometry: point,
+        symbol: simpleMarkerSymbol,
+
+        // adding the popup properties
+        attributes: attributes,
+        popupTemplate: popupTemplate
+      });
+      
+      // adding the point to the graphics layer
+      graphicsLayer.add(pointGraphic);
+
+      // Define Popup Template object for the Feature Layer
+      const popupEduusa = {
+        "title": "EDUs",
+        //"content": "Name: {INSTNM} <br> Location: {CITY}, {STABBR} <br> Link: {WEBADDR}" // needs more to convert ones without https:// to a hyperlink
+        "content:"Blah linky" +{expression/Full Web Address}" + "click here."
+      }
+
+      // use arcadeExpressionInfos to convert the web address to a hyperlink from the WEBBADDR field
+
+      // adding the Const for the feature layer
+      const usaeduLayer = new FeatureLayer({
+        url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Colleges_and_Universities_View/FeatureServer",
+
+        // adding the popup here
+        outFields: ["Name","Link","Location"],
+        popupTemplate: popupEduusa, 
+        expressionInfos: arcadeExpressionInfos
+      });
+
+      // adding the feature layer to the map
+      map.add(usaeduLayer);
+    });
+  </script> 
+</body>
+</html>
