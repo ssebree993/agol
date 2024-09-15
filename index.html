@@ -83,17 +83,24 @@
 
       // Define a pop-up for usaeduLayer  // FIX FOR AIRPORTS later --
       const popupEduusa = {
-      "title": "US Airports",
-      "content": "<b>Name:</b> {INSTNM}<br><b>Location:</b> {CITY}, {STABBR} <br> Link: <a href='{WEBADDR}'>Website</a>" //add Arcade reference for logic
+        "title": "EDU: {INSTNM}",
+        "content": "<b>Name:</b> {INSTNM}<br><b>Location:</b> {CITY}, {STABBR} <br> Link: <a href='{WEBADDR}'>Website</a>" //add Arcade reference for logic
       };
 
-      //adding second layer
-      const usa_airports = new FeatureLayer({
-        url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/US_Airports_576/FeatureServer/0",
+      //keep schools layer
+      const usaeduLayer = new FeatureLayer({
+        url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/USA_Education_576/FeatureServer/0",
+        outFields: ["INSTNM","CITY","STABBR","WEBADDR"],
+        popupTemplate: popupEduusa
+      });
 
-      //adding the popup here
-      outFields: ["NAME","LOCATION"],
-      popupTemplate: popupEduusa
+      //adding second layer
+      //const usa_airports = new FeatureLayer({
+        //url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/US_Airports_576/FeatureServer/0",
+
+        //adding the popup here
+        outFields: ["NAME","LOCATION"],
+        popupTemplate: popupEduusa
       });
 
       //setting up the icon
@@ -109,10 +116,12 @@
 
       const airportLayer = new FeatureLayer({
         url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/US_Airports_576/FeatureServer/0",
-        renderer: airportRenderer  //calling the icon
+        renderer: airportRenderer,  //calling the icon
+        definitionExpression: "Fac_type = 'AIRPORT'" //filtering the airports
       });
 
       //adding the feature layer to the map
+      map.add(usaeduLayer);
       map.add(usa_airports);
     });
   </script> 
