@@ -117,18 +117,17 @@
         "symbol": {
           "type": "picture-marker",
           "url": "https://sounny.github.io/agol/outline_local_airport_black_24dp.png",
-          //"url": "https://ssebree993.github.io/agol/outline_local_airport_black_24dp.png",
+          //"url": "https://ssebree993.github.io/agol/outline_local_airport_5F6368.png",
           "width": "18px",
           "height": "18px"
         }
       }
-      //const to make the airport labels
       const airportLabels = {
         symbol: {
           type: "text",
-          color: "#FFFFFF",
-          haloColor: "#5E8D74",
-          haloSize: "2px",
+          color: "black",
+          haloColor: "white",
+          haloSize: "1px",
           font: {
             size: "12px",
             family: "Noto Sans",
@@ -138,14 +137,15 @@
         },
         labelPlacement: "above-center",
         labelExpressionInfo: {
-          expression: "$feature.Fac_Name"
+          expression: "$feature.FAC_NAME"
         }
-      };
+      }
+
       const airportLayer = new FeatureLayer({
         url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/US_Airports_576/FeatureServer",
         renderer: airportRenderer,  //calling the icon
-        definitionExpression: "Fac_type = 'AIRPORT'" //filtering the airports
-
+        definitionExpression: "Fac_type = 'AIRPORT'", //filtering the airports
+      
         labelingInfo: [airportLabels] //adding the labels
       });
 
