@@ -112,16 +112,16 @@
         popupTemplate: popupAirports
       });
 
-      //setting up the icon
       const airportRenderer = {
-        type: "simple",
-        symbol: {
-          type: "picture-marker",
-          url: "https://ssebree993.github.io/agol/blackAP.png",
-          width: "20px",
-          height: "20px"
+        "type": "simple",
+        "symbol": {
+          "type": "picture-marker",
+          "url": "https://sounny.github.io/agol/outline_local_airport_black_24dp.png",
+          //"url": "https://ssebree993.github.io/agol/outline_local_airport_black_24dp.png",
+          "width": "18px",
+          "height": "18px"
         }
-      };
+      }
 
       const airportLayer = new FeatureLayer({
         url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/US_Airports_576/FeatureServer",
@@ -131,7 +131,7 @@
 
       //adding the feature layer to the map
       map.add(usaeduLayer);
-      map.add(usa_airports);
+      map.add(airportLayer);
     });
 
   </script> 
