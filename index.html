@@ -27,21 +27,16 @@
       "esri/config", 
       "esri/Map", 
       "esri/views/MapView", 
-
-      //adding in the modules for the graphic and graphic layer
       "esri/Graphic",
       "esri/layers/GraphicsLayer",
-
-      //adding in the modules for the FeatureLayer
       "esri/layers/FeatureLayer"
     ], function(esriConfig, Map, MapView, Graphic, GraphicsLayer, FeatureLayer) {
       
       // Set the API key
       esriConfig.apiKey = "AAPKfc7af196c6e64aac988bbf7529dccd648UR6aqr1HCuaJ5GN7OXourF3WZ9GF_b8R9-mMcrEZMHlZzpuLXHwt5iwInOA9k4J";
-      //esriConfig.apiKey = "AAPT85fOqywZsicJupSmVSCGrslDPpHLKdEC579i7QVZKKNqTaFEeIytAi1JTwVtY-aleNcZEVhA7Z-zMznZkvxmIW4cicsFSs5dK-LqT5GRNyinVkEWRb345PmXXiTttCfoIhOzFDEKiAlnI5i9lGeSYfylzPB9DZqLOy749pB-_OpNF3slOcfhIeUFFFMERUvMpXDF2lvLhBUz3GNJJ4saUOWCbEbhrWG8wKa3bQV33F2vD2P_EWfvXc_3aeFIdyVGAT2_0FIWPe5N";
 
       const map = new Map({
-        basemap: "arcgis-topographic" // Basemap layer service
+        basemap: "arcgis-streets" // Basemap layer service
       });
  
       // Create the map view
@@ -52,40 +47,55 @@
         zoom: 10, // Zoom level
       });
 
-      //adding the constructor for the graphicslayer
+      // Adding the constructor for the graphics layer
       const graphicsLayer = new GraphicsLayer();
       map.add(graphicsLayer);
 
-      //defining the geometry of the point
-      const point = { //Create a point  
+      // Defining the geometry of the point
+      const point = { 
         type: "point",  
-        longitude: -99.1000,    //long lat of UNK
-        latitude: 40.70100
+        longitude: -99.1000, // Longitude of UNK
+        latitude: 40.70100   // Latitude of UNK
       };
       
-      //defining marker style
+      // Defining marker style
       const simpleMarkerSymbol = {  
         type: "simple-marker", 
         style: "square", 
-        color: [0, 0, 255],  // lopers blue 
+        color: [0, 0, 255],  // Lopers blue 
         outline: {  
           color: [255, 255, 255], // White  
           width: 3
         }  
       };
-      //creating the point
+
+      // Defining popup properties
+      const popupTemplate = {
+        title: "UNK",
+        content: "Bruner Hall"
+      }
+      const attributes = {
+        name: "UNK",
+        location: "Kearney, NE"
+      }
+      
+      // Creating the point
       const pointGraphic = new Graphic({  
         geometry: point,  
-        symbol: simpleMarkerSymbol  
+        symbol: simpleMarkerSymbol,
+        
+        //adding the popup properties
+        attributes: attributes,
+        popupTemplate: popupTemplate
       });
 
-      //adding the point to the graphics layer
+      // Adding the point to the graphics layer
       graphicsLayer.add(pointGraphic);
 
       // Define a pop-up for usaeduLayer 
       const popupEduusa = {
         "title": "EDU: {INSTNM}",
-        "content": "<b>Name:</b> {INSTNM}<br><b>Location:</b> {CITY}, {STABBR} <br> Link: <a href='{WEBADDR}'>Website</a>" //add Arcade reference for logic
+        "content": "<b>Name:</b> {INSTNM}<br><b>Location:</b> {CITY}, {STABBR} <br> Link: <a href='{WEBADDR}'>Website</a>"
       };
 
       // Define a pop-up for usa_airports
@@ -94,21 +104,15 @@
         "content": "<b>Name:</b> {FAC_NAME}<br><b>Callsign:</b> {LOC_ID}"
       };
 
-      // adding constructor for the feature layer ** symbols not showing as squares, changed to a second layer; only colleges showing
+      // Adding constructor for the feature layer
       const usaeduLayer = new FeatureLayer({
         url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Structures_Education_v1/FeatureServer"
-    });
+      });
 
-      // adding second layer
+      // Adding second layer
       const usa_airports = new FeatureLayer({
         url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/US_Airports_576/FeatureServer/0",
-        //defining the fields for the popup
         outFields: ["LOC_ID","FAC_NAME"],
-      
-        //adding the popup here
-        popupTemplate: popupEduusa,
-      
-        //adding the airport popup here
         popupTemplate: popupAirports
       });
 
@@ -117,11 +121,11 @@
         "symbol": {
           "type": "picture-marker",
           "url": "https://sounny.github.io/agol/outline_local_airport_black_24dp.png",
-          //"url": "https://ssebree993.github.io/agol/outline_local_airport_5F6368.png",
           "width": "18px",
           "height": "18px"
         }
-      }
+      };
+
       const airportLabels = {
         symbol: {
           type: "text",
@@ -139,21 +143,19 @@
         labelExpressionInfo: {
           expression: "$feature.FAC_NAME"
         }
-      }
+      };
 
       const airportLayer = new FeatureLayer({
         url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/US_Airports_576/FeatureServer",
-        renderer: airportRenderer,  //calling the icon
-        definitionExpression: "Fac_type = 'AIRPORT'", //filtering the airports
-      
-        labelingInfo: [airportLabels] //adding the labels
+        renderer: airportRenderer,  // Calling the icon
+        definitionExpression: "Fac_type = 'AIRPORT'", // Filtering the airports
+        labelingInfo: [airportLabels] // Adding the labels
       });
 
-      //adding the feature layer to the map
+      // Adding the feature layer to the map
       map.add(usaeduLayer);
       map.add(airportLayer);
     });
-
   </script> 
 </head>
 <body>
