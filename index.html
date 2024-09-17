@@ -57,6 +57,16 @@
         longitude: -99.09579, // Longitude of UNK
         latitude: 40.70007   // Latitude of UNK
       };
+     // Create a line geometry with the coordinates of the line
+     const polyline = {
+       type: "polyline", // autocasts as new Polyline()
+      paths: [[-99.12570, 40.69957],[-99.09503, 40.69941]]
+     };
+     //Create a polygon geometry with the coordinates of the polygon
+     const polygon = {
+       type: "polygon", // autocasts as new Polygon()
+       rings: [[-99.12570, 40.69957],[-99.09503, 40.69941],[-99.09503, 40.69941],[-99.12570, 40.69957]]
+      };
       
       // Defining marker style
       const simpleMarkerSymbol = {  
@@ -71,12 +81,12 @@
 
       // Defining popup properties
       const popupTemplate = {
-        title: "UNK",
-        content: "Bruner Hall, Geography Department"
+        title: "{Name}",
+        content: "{Description}"
       }
       const attributes = {
-        name: "UNK",
-        location: "Kearney, NE"
+        Name: "University of Nebraska - Kearney (UNK)",
+        Description: "Bruner Hall: <a href='https://www.unk.edu/academics/geography/index.php'> My Geography Home!</a>"
       }
       
       // Creating the point
@@ -91,6 +101,8 @@
 
       // Adding the point to the graphics layer
       graphicsLayer.add(pointGraphic);
+      graphicsLayer.add(lineGraphic);
+      graphicsLayer.add(polyGraphic);
 
       // Define a pop-up for usaeduLayer 
       const popupEduusa = {
