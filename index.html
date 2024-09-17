@@ -166,12 +166,12 @@
           "height": "18px"
         }
       };
-      //adding heliport symbol
 
+      //adding heliport symbol
       const airportLabels = {
         symbol: {
           type: "text",
-          color: "black",
+          color: "gray",
           haloColor: "white",
           haloSize: "1px",
           font: {
@@ -201,9 +201,27 @@
         "type": "simple",
         "symbol": {
           "type": "picture-marker",
-          "url": "https://sounny.github.io/agol/outline_local_airport_black_24dp.png",
+          "url": "https://ssebree993/agol/helipad.png",
           "width": "14px",
           "height": "14px"
+        }
+      };
+      const hpLabels = {
+        symbol: {
+          type: "text",
+          color: "black",
+          haloColor: "white",
+          haloSize: "1px",
+          font: {
+            size: "12px",
+            family: "Noto Sans",
+            style: "italic",
+            weight: "normal"
+          }
+        },
+        labelPlacement: "right-center",
+        labelExpressionInfo: {
+          expression: "$feature.FAC_NAME"
         }
       };
 
