@@ -171,7 +171,7 @@
       const airportLabels = {
         symbol: {
           type: "text",
-          color: "gray",
+          color: "black",
           haloColor: "white",
           haloSize: "1px",
           font: {
@@ -193,7 +193,6 @@
         minScale: 3000000, // Most zoomed out (avoid clutter)
         maxScale: 1000, // Most zoomed in. Max should always be smaller than min.
         definitionExpression: "Fac_type = 'AIRPORT'", // Filtering the airports
-
         labelingInfo: [airportLabels] // Adding the labels        
       });
 
@@ -201,27 +200,27 @@
         "type": "simple",
         "symbol": {
           "type": "picture-marker",
-          "url": "https://ssebree993/agol/helipad.png",
-          "width": "14px",
-          "height": "14px"
+          "url": "http://static.arcgis.com/images/Symbols/NPS/npsPictograph_0231b.png",
+          "width": "40px",
+          "height": "40px"
         }
       };
       const hpLabels = {
         symbol: {
           type: "text",
-          color: "black",
+          color: "gray",
           haloColor: "white",
           haloSize: "1px",
           font: {
             size: "12px",
             family: "Noto Sans",
-            style: "italic",
+            style: "regular",
             weight: "normal"
           }
         },
         labelPlacement: "right-center",
         labelExpressionInfo: {
-          expression: "$feature.FAC_NAME"
+          expression: "$feature.FAC_NAME + ' (' + $feature.LOC_ID + ')'"
         }
       };
 
@@ -231,7 +230,7 @@
         minScale: 3000000, // Most zoomed out (avoid clutter)
         maxScale: 1000, // Most zoomed in. Max should always be smaller than min.
         definitionExpression: "Fac_type = 'HELIPORT'", // Filtering the airports
-        labelingInfo: [airportLabels] // Adding the labels        
+        labelingInfo: [hpLabels] // Adding the labels        
       });
 
       // Adding the feature layer to the map
