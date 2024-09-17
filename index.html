@@ -147,7 +147,7 @@
 
       // Adding constructor for the feature layer
       const usaeduLayer = new FeatureLayer({
-        url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Structures_Education_v1/FeatureServer"
+        url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Structures_Education_v1/FeatureServer/0"
       });
 
       // Adding second layer
@@ -166,6 +166,7 @@
           "height": "18px"
         }
       };
+      //adding heliport symbol
 
       const airportLabels = {
         symbol: {
@@ -189,13 +190,36 @@
       const airportLayer = new FeatureLayer({
         url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/US_Airports_576/FeatureServer",
         renderer: airportRenderer,  // Calling the icon
+        minScale: 3000000, // Most zoomed out (avoid clutter)
+        maxScale: 1000, // Most zoomed in. Max should always be smaller than min.
         definitionExpression: "Fac_type = 'AIRPORT'", // Filtering the airports
-        labelingInfo: [airportLabels] // Adding the labels
+
+        labelingInfo: [airportLabels] // Adding the labels        
+      });
+
+      const hpRenderer = {
+        "type": "simple",
+        "symbol": {
+          "type": "picture-marker",
+          "url": "https://sounny.github.io/agol/outline_local_airport_black_24dp.png",
+          "width": "14px",
+          "height": "14px"
+        }
+      };
+
+      const hpLayer = new FeatureLayer({
+        url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/US_Airports_576/FeatureServer",
+        renderer: airportRenderer,  // Calling the icon
+        minScale: 3000000, // Most zoomed out (avoid clutter)
+        maxScale: 1000, // Most zoomed in. Max should always be smaller than min.
+        definitionExpression: "Fac_type = 'HELIPORT'", // Filtering the airports
+        labelingInfo: [airportLabels] // Adding the labels        
       });
 
       // Adding the feature layer to the map
-      map.add(usaeduLayer);
+      map.add(usaeduLayer, 0);
       map.add(airportLayer);
+      map.add(hpLayer);
     });
   </script> 
 </head>
