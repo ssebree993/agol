@@ -141,9 +141,22 @@
           "<p>For more information, visit: <a href='{WEBADDR}'>{WEBADDR}</a></p>"
       }
 
+      // Symbol for edu layer (larger symbol)
+      const eduRenderer = {
+        "type": "simple",
+        "symbol": {
+          "type": "picture-marker",
+          "url": "http://static.arcgis.com/images/Symbols/OCHA/Infrastructure/infrastructure_building_bluebox.png",
+          "width": "18px",
+          "height": "18px"
+        }
+      };
+
       // Adding the Const for the feature layer
       const usaeduLayer = new FeatureLayer({
         url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Colleges_and_Universities_View/FeatureServer",
+        // alt = url:"https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Structures_Education_v1/FeatureServer"
+        renderer: eduRenderer,  // Calling the icon
         outFields: ["NAME","TOT_ENROLL"],
         popupTemplate: popupEduusa
       });
@@ -225,7 +238,7 @@
       };
 
       //Define a popup for the airportLayer
-            const popupHP = {
+      const popupHP = {
         "title": "Heliport: {FAC_NAME}",
         "content": "Location ID: {LOC_ID}"
       };
@@ -238,7 +251,6 @@
         labelingInfo: [hpLabels], // Adding the labels 
         outFields: ["FAC_NAME","LOC_ID"],
         popupTemplate: popupHP
-
       });
 
       // Adding the feature layer to the map
