@@ -133,22 +133,28 @@
       graphicsLayer.add(lineGraphic);      
       graphicsLayer.add(pointGraphic);
 
-      // Define a pop-up for usaeduLayer 
+      // Define a pop-up for usaeduLayer
       const popupEduusa = {
-        "title": "EDU: {INSTNM}",
-        "content": "<b>Name:</b> {INSTNM}<br><b>Location:</b> {CITY}, {STABBR} <br> Link: <a href='{WEBADDR}'>Website</a>"
-      };
+        "title": "Educational Institutions: {CITY}, {STABBR}",
+        content: "<p>As of 2024, <b>{INSTNM}</b>, is a " +
+          "<b>{SECTOR}</b> school.</p>" +
+          "<p>For more information, visit: <a href='{WEBADDR}'>{WEBADDR}</a></p>"
+      }
+
+    //adding the Const for the feature layer
+    const usaeduLayer = new FeatureLayer({
+    url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Colleges_and_Universities_View/FeatureServer",
+
+    //adding the popup here
+    outFields: ["NAME","TOT_ENROLL"],
+    popupTemplate: popupEduusa
+    });
 
       // Define a pop-up for usa_airports
       const popupAirports = {
         "title": "Airport: {FAC_NAME}",
         "content": "<b>Name:</b> {FAC_NAME}<br><b>Callsign:</b> {LOC_ID}"
       };
-
-      // Adding constructor for the feature layer
-      const usaeduLayer = new FeatureLayer({
-        url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Structures_Education_v1/FeatureServer/0"
-      });
 
       // Adding second layer
       const usa_airports = new FeatureLayer({
@@ -161,7 +167,7 @@
         "type": "simple",
         "symbol": {
           "type": "picture-marker",
-          "url": "https://sounny.github.io/agol/outline_local_airport_black_24dp.png",
+          "url": "http://static.arcgis.com/images/Symbols/Transportation/esriDefaultMarker_111.png",
           "width": "18px",
           "height": "18px"
         }
@@ -200,9 +206,9 @@
         "type": "simple",
         "symbol": {
           "type": "picture-marker",
-          "url": "http://static.arcgis.com/images/Symbols/NPS/npsPictograph_0231b.png",
-          "width": "40px",
-          "height": "40px"
+          "url": "http://static.arcgis.com/images/Symbols/Transportation/HelicopterRed.png",
+          "width": "20px",
+          "height": "20px"
         }
       };
       const hpLabels = {
@@ -214,11 +220,11 @@
           font: {
             size: "12px",
             family: "Noto Sans",
-            style: "regular",
+            style: "normal",
             weight: "normal"
           }
         },
-        labelPlacement: "right-center",
+        labelPlacement: "above-center",
         labelExpressionInfo: {
           expression: "$feature.FAC_NAME + ' (' + $feature.LOC_ID + ')'"
         }
@@ -226,7 +232,7 @@
 
       const hpLayer = new FeatureLayer({
         url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/US_Airports_576/FeatureServer",
-        renderer: airportRenderer,  // Calling the icon
+        renderer: hpRenderer,  // Calling the icon
         minScale: 3000000, // Most zoomed out (avoid clutter)
         maxScale: 1000, // Most zoomed in. Max should always be smaller than min.
         definitionExpression: "Fac_type = 'HELIPORT'", // Filtering the airports
@@ -234,9 +240,9 @@
       });
 
       // Adding the feature layer to the map
-      map.add(usaeduLayer, 0);
       map.add(airportLayer);
       map.add(hpLayer);
+      map.add(usaeduLayer);
     });
   </script> 
 </head>
