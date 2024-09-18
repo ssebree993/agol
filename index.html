@@ -141,28 +141,27 @@
           "<p>For more information, visit: <a href='{WEBADDR}'>{WEBADDR}</a></p>"
       }
 
-    //adding the Const for the feature layer
-    const usaeduLayer = new FeatureLayer({
-    url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Colleges_and_Universities_View/FeatureServer",
-
-    //adding the popup here
-    outFields: ["NAME","TOT_ENROLL"],
-    popupTemplate: popupEduusa
-    });
+      // Adding the Const for the feature layer
+      const usaeduLayer = new FeatureLayer({
+        url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Colleges_and_Universities_View/FeatureServer",
+        outFields: ["NAME","TOT_ENROLL"],
+        popupTemplate: popupEduusa
+      });
 
       // Define a pop-up for usa_airports
       const popupAirports = {
         "title": "Airport: {FAC_NAME}",
         "content": "<b>Name:</b> {FAC_NAME}<br><b>Callsign:</b> {LOC_ID}"
-      };
+      }
 
-      // Adding second layer
+      // Adding airports layer
       const usa_airports = new FeatureLayer({
         url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/US_Airports_576/FeatureServer",
         outFields: ["LOC_ID","FAC_NAME"],
         popupTemplate: popupAirports
       });
 
+      // Symbol for airports 
       const airportRenderer = {
         "type": "simple",
         "symbol": {
@@ -173,7 +172,7 @@
         }
       };
 
-      //adding heliport symbol
+      // Adding heliport symbol
       const airportLabels = {
         symbol: {
           type: "text",
